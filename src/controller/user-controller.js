@@ -25,9 +25,28 @@ const create=async(req,res)=>{
     }
 
 }
+const sighIn=async(req,res)=>{
+    try{
+        const response= await userService.signIn(req.body);
+        return res.status(200).json({
+            data:response,
+            err:{},
+            success:true,
+            message:"successfully sign in "
+        })
+    }catch(error){
+        console.log(error)
+        return res.status(200).json({
+            data:{},
+            err:error,
+            success:false,
+            message:"not able to sign in "
+        })
+    }
+}
 
 
 module.exports={
     create,
-    
+    sighIn,
 }

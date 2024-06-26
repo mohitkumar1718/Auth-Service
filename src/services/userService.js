@@ -18,6 +18,23 @@ class userService{
             throw error;
         }
     }
+    async signIn(data){
+        try{
+            const user= await this.userRepository.getByEmail(data.email);
+            const matchPassword=this.checkPassword(data.password,user.password);
+            // if password not matched
+            if(!matchPassword){
+                console.log("Password not matched")
+                throw {error:" wrong password ,password is not matched"}
+            }
+            // if password is matched generate token
+            const token=this.createToken({email:user.email, id:user.id})
+            return token
+        }catch(error){
+            console.log(error);
+            throw error
+        }
+    }
 
     createToken(user){ 
         try{
@@ -28,6 +45,7 @@ class userService{
             throw error
         }
     }
+
     verifyToken(token){        
         try{
             const response=jwt.verify(token,JWT_KEY)
@@ -38,9 +56,9 @@ class userService{
         }
     }
 
-    checkPassword(userPlanePassword,encrytPassword){
+    checkPassword(PlanePassword,encrytPassword){
         try{
-            return bcrypt.compareSync(userPlanePassword,encrytPassword)
+            return bcrypt.compareSync(PlanePassword,encrytPassword)
         }catch(error){
             console.log("something went wrong in verifyToken in userService", error)
             throw error

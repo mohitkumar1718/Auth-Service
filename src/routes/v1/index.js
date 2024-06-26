@@ -3,6 +3,6 @@ const express=require('express')
 
 const router=express.Router();
 
-router.post('/signup',userController.create)
-
+router.post('/signUp',userController.create)
+router.post('/signIn',userController.sighIn)
 module.exports=router;
