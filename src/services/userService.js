@@ -35,10 +35,27 @@ class userService{
             throw error
         }
     }
+    async isAuthenticated(token){
+        try{
+            const response= this.verifyToken(token);
+            if(!response){
+                throw {error:"token is not valid"}
+            }
+            const user=await this.userRepository.get(response.id)
+            if(!user){  
+                throw {error:"no user is present with the corresponding token"}
+            }
+            return user.id
+            
+        }catch(error){
+            console.log(error);
+            throw error
+        }
+    }
 
     createToken(user){ 
         try{
-            var token=jwt.sign(user,JWT_KEY,{ expiresIn: '1h' })
+            var token=jwt.sign(user,JWT_KEY,{ expiresIn: '11h' })
             return token;
         }catch(error){
             console.log("something went wrong in createToken in userService", error)
