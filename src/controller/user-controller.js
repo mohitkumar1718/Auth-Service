@@ -65,9 +65,32 @@ const isAuthenticated=async(req,res)=>{
     }
 }
 
+const isAdmin=async(req,res)=>{
+    try{
+        const response=await userService.isAdmin(req.body.id)
+
+        return res.status(200).json({
+            data:response,
+            err:{},
+            success:true,
+            message:"successfully fetch whether user is admin or not"
+        })
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({
+            data:{},
+            err:error,
+            success:false,
+            message:"this user is not Admin"
+        })
+    }
+
+}
+
 
 module.exports={
     create,
     sighIn,
     isAuthenticated,
+    isAdmin,
 }

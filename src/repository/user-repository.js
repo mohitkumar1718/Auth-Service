@@ -1,4 +1,4 @@
-const {User}=require('../models/index');
+const {User,Role}=require('../models/index');
 
 class userRepository{
 
@@ -48,6 +48,21 @@ class userRepository{
             console.log(error);
             throw {error:"Cannot find the email please signUp first"}
         }
+    }
+    async isAdmin(userId){
+        try{
+            const user= await User.findByPk(userId)
+            const adminRole= await Role.findOne({
+                where:{
+                    name:"ADMIN"
+                }
+            }) 
+            return adminRole.hasUser(user);
+        }catch(error){
+            console.log(error);
+            throw {error:"something went wrong in repository "}
+        }
+
     }
 }
 module.exports=userRepository;

@@ -13,9 +13,9 @@ const prepareAndStartServer=async()=>{
         db.sequelize.sync({alter:true});
     }
 
-    const u1=await User.findByPk(3);
-    const r1=await Role.findByPk(1);
-    u1.addRole(r1);
+    // const u1=await User.findByPk(1);
+    // const r1=await Role.findByPk(2);
+    // u1.addRole(r1);
     
 
     app.use('/api',ApiRoutes)
